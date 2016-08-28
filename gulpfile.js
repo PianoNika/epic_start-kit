@@ -79,18 +79,18 @@ gulp.task('js', function () {
   return gulp.src([
       dirs.source + '/js/jquery-3.1.0.min.js',
       dirs.source + '/js/jquery-migrate-1.4.1.min.js',
-      dirs.source + '/js/owl.carousel.min.js',
-      dirs.source + '/js/script.js',
+      dirs.source + '/libs/owl.carousel.2.1.0/owl.carousel.js',
+      dirs.source + '/js/scripts.js',
     ])
     .pipe(concat('script.min.js'))
-    .pipe(uglify())
+    // .pipe(uglify())
     .pipe(gulp.dest(dirs.build + '/js'));
 });
 
 // ЗАДАЧА: Сборка всего
 gulp.task('build', gulp.series(                             // последовательно:
   'clean',                                                  // последовательно: очистку папки сборки
-  gulp.parallel('less', 'img'),                             // параллельно: компиляцию стилей, ...
+  gulp.parallel('less', 'img', 'js'),                             // параллельно: компиляцию стилей, ...
   'html'                                                    // последовательно: сборку разметки
 ));
 
@@ -120,6 +120,11 @@ gulp.task('serve', gulp.series('build', function() {
   gulp.watch(                                               // следим за изображениями
     dirs.source + '/img/*.{gif,png,jpg,jpeg,svg}',
     gulp.series('img', reloader)                            // при изменении оптимизируем, копируем и обновляем в браузере
+  );
+
+  gulp.watch(                                               // следим за изображениями
+    dirs.source + '/js/*.{js}',
+    gulp.series('js', reloader)                            // при изменении оптимизируем, копируем и обновляем в браузере
   );
 
   // gulp.watch(blocks.js, gulp.series('js', reloader));

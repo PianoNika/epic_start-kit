@@ -34,8 +34,8 @@
   },
   "config": {
     "directories": {
-      "source": "./src",
-      "build": "./build"
+      "source": "src",
+      "build": "build"
     }
   }
 }
